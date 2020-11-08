@@ -44,7 +44,6 @@ def decorator(func):
 
     return wrapper
 
-
 class BaseStartChome():
     """
     反爬模式启动浏览器
