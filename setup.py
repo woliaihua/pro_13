@@ -144,6 +144,7 @@ class BaseStartChome():
         if not first:
             self.driver.get('http://yqdz.meiri100.cn/mall/index')
         integral = self.get_integral()  # 获取积分
+        print("当前积分：",integral)
         l = get_suds2(integral, l2)  # 获取可以购买的商品与个数 [('300元京东卡', 1, 30000), ('100元京东卡', 1, 10000)]
         if not l:
             return
@@ -154,9 +155,12 @@ class BaseStartChome():
                 for i in range(int(goods_num)-1):  # 输入个数
                     click(S('//button[@class="add_btn"]'))
                 click('确认兑换')
-                sleep(0.2)
+                sleep(3)
+                title = self.driver.title
                 integral2 = self.get_integral()  # 再次获取积分
+                print("当前积分2：",integral)
                 if integral2 == self.integral:  # 兑换界面没有兑换成功，无货
+                    print("兑换界面没有兑换成功，无货")
                     self.clear_cart()  # 清空购物车
                     l2 = l2.remove(l2[index])  # 移除当前商品
                 else:  # 兑换成功
@@ -203,13 +207,17 @@ class BaseStartChome():
         while True:
             print('账号{}页面刷新检测是否放法商品'.format(self.name))
             self.driver.refresh()
-            sleep(2.3)
+            sleep(1.3)
             l = [('300元京东卡', 30000), ('100元京东卡', 10000), ('50元京东卡', 5000), ('20元京东卡', 2000)]
             for index, (name, goods_num) in enumerate(l):
                 try:
-                    self.driver.find_element_by_xpath(
-                        '//*[@id="list"]/li[@goods_name="{}"]//button[contains(text(),"立即购买")]'.format(name))
+                    xpath = '//*[@id="list"]/li[@goods_name="{}"]//button[contains(text(),"立即购买")]'.format(name)
+
+                    #self.driver.find_element_by_xpath(xpath)
+                    wait_until(S(xpath).exists,
+                               timeout_secs=0.2, interval_secs=0.2)
                     self.click_buy(l, True)
+                    break
                     self.exchange()
                 except Exception as e:
                     #raise e

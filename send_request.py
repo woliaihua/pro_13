@@ -98,6 +98,9 @@ class SendRequest():
         except:
             self.integral = int(atof(integral))
         return self.integral
+
+    def duihuan_300(self):
+
 if __name__ == '__main__':
     url = 'http://yqdz.meiri100.cn/Mall/get_goods_list?p=1&psize=10'
     header = {'Origin':'http://yqdz.meiri100.cn',
