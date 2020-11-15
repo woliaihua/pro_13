@@ -8,7 +8,7 @@ import json
 from locale import atof, setlocale, LC_NUMERIC
 from jifen_2_goods import get_suds2
 import re
-import datetime
+
 
 setlocale(LC_NUMERIC, 'English_US')
 

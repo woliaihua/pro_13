@@ -1,21 +1,8 @@
 
-import configparser
-import chardet
-from locale import atof,setlocale,LC_NUMERIC
+from locale import setlocale,LC_NUMERIC
 setlocale(LC_NUMERIC, 'English_US')
 
-def get_file_code(filename):
-    f3 = open(filename, 'rb')
-    data = f3.read()
-    encode = chardet.detect(data).get('encoding')
-    f3.close()
-    return encode
 
-path2 ='config.ini'
-encode = get_file_code(path2)
-config = configparser.RawConfigParser()
-config.read(path2, encoding=encode)
-state = config.get('month', "state")
 
 
 def get_suds2(num,l2):
@@ -33,9 +20,6 @@ def get_suds2(num,l2):
                 continue
             elif shang>5:
                 shang = 5
-            if state == 'N':
-                if name == '20元京东卡':
-                    continue
             dic.append((name,shang,integral))
             num = num-int(integral)*shang
             l2.remove(l2[index])

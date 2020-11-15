@@ -4,7 +4,9 @@ from jifen_2_goods import get_suds2
 from send_request import SendRequest
 import sys
 
-
+"""
+和setup的区别是兑换只用2000积分 
+"""
 
 def goods_duihuan(u, p):
     S1 = SendRequest()
@@ -27,7 +29,7 @@ def goods_duihuan(u, p):
                             "addr": '',
                             "consigneePhone": '',
                             "consigneeName": '',
-                            "money": goods_num * int(dic.get('goods_price')),
+                            "money": 2000,
                         }
                         res = S1.duihuan(data)
                         if res.get('success') == 1:  # 兑换成功
