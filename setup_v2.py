@@ -5,7 +5,7 @@ from send_request import SendRequest
 import sys
 
 """
-和setup的区别是兑换只用2000积分 
+和setup的区别是兑换只用2000积分兑换30000积分的卡
 """
 
 def goods_duihuan(u, p):
@@ -14,16 +14,15 @@ def goods_duihuan(u, p):
     # 获取当前账号积分
     integral = S1.get_integral()  # 获取积分
     print("当前账号{u}剩余积分{integral}".format(u=u, integral=integral))
-    l2 = [('300元京东卡', 30000), ('100元京东卡', 10000), ('50元京东卡', 5000), ('20元京东卡', 2000)]
-    l = get_suds2(integral, l2)  # 获取可以购买的商品与个数 [('300元京东卡', 1, 30000), ('100元京东卡', 1, 10000)]
-    if l:
+    l = [('300元京东卡', 1, 2000)]
+    if integral >= 2000:
         response_ = S1.get_goods_list()  # 获取商品
         for index, (goodsname, goods_num, base_integral) in enumerate(l):
             for dic in response_:
                 if goodsname == dic.get('goods_name'):
                     if int(dic.get('inventory')) >= goods_num:  # 剩余的卡是不是大于可兑换的数量
                         data = {
-                            "auto_ids": "{id},{goods_num},{goods_name},{price},{png_src},3".format(
+                            "auto_ids": "{id},{goods_num},{goods_name},2000,{png_src},3".format(
                                 id=dic.get('id'), goods_num=goods_num, goods_name=dic.get('goods_name'),
                                 price=dic.get('goods_price'), png_src=dic.get('original_img')),
                             "addr": '',
